@@ -1,0 +1,25 @@
+name: inclusivefit
+description: InclusiveFit - simple working version with all core screens/flows
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  shared_preferences: ^2.2.2
+  percent_indicator: ^4.2.3
+  intl: ^0.19.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
