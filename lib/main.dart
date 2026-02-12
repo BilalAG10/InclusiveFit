@@ -1,0 +1,49 @@
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'screens/onboarding_screen.dart';
+import 'screens/login_screen.dart';
+import 'shell/home_shell.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+
+  final seenOnboarding = prefs.getBool('seen_onboarding') ?? false;
+  final hasName = (prefs.getString('user_name') ?? '').trim().isNotEmpty;
+
+  runApp(InclusiveFitApp(
+    initialRoute: !seenOnboarding
+        ? Routes.onboarding
+        : (hasName ? Routes.home : Routes.login),
+  ));
+}
+
+class Routes {
+  static const onboarding = '/onboarding';
+  static const login = '/login';
+  static const home = '/';
+}
+
+class InclusiveFitApp extends StatelessWidget {
+  final String initialRoute;
+  const InclusiveFitApp({super.key, required this.initialRoute});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'InclusiveFit',
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4F46E5)),
+      ),
+      initialRoute: initialRoute,
+      routes: {
+        Routes.onboarding: (_) => const OnboardingScreen(),
+        Routes.login: (_) => const LoginScreen(),
+        Routes.home: (_) => const HomeShell(),
+      },
+    );
+  }
+}
