@@ -142,5 +142,3 @@ If build fails:
 
 ------------------------------------------------------------------------
 
-If something breaks, send: - Screenshot of the error - The command you
-ran - The last thing you changed
