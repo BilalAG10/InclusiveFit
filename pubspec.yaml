@@ -9,10 +9,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   cupertino_icons: ^1.0.8
   shared_preferences: ^2.2.2
   percent_indicator: ^4.2.3
   intl: ^0.19.0
+
+  # ✅ Firebase
+  firebase_core: ^3.6.0
+  cloud_firestore: ^5.4.4
 
 dev_dependencies:
   flutter_test:
