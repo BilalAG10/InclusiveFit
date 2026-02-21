@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "138050183999",
+    "project_id": "lnclusivefit",
+    "storage_bucket": "lnclusivefit.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138050183999:android:0ec12d7b96616b2570a98a",
+        "android_client_info": {
+          "package_name": "com.example.inclusivefit_simple"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQDHWMHYHjqUD8-9P7jL-GNwbwZ6SJVUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

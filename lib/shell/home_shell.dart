@@ -7,6 +7,8 @@ import '../screens/nutrition_screen.dart';
 import '../screens/chat_screen.dart';
 import '../screens/settings_screen.dart';
 
+import '../services/exercise_service.dart'; // ✅ add this
+
 class HomeShell extends StatefulWidget {
   const HomeShell({super.key});
 
@@ -25,6 +27,14 @@ class _HomeShellState extends State<HomeShell> {
     ChatScreen(),
     SettingsScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+
+    // ✅ Test Firestore fetch once (prints exercises in console)
+    ExerciseService().testFetch();
+  }
 
   @override
   Widget build(BuildContext context) {

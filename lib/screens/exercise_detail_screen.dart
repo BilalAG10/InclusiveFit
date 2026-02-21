@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data/exercises.dart';
+import '../models/exercise.dart';
 import 'workout_timer_screen.dart';
 
 class ExerciseDetailScreen extends StatelessWidget {
@@ -18,6 +18,8 @@ class ExerciseDetailScreen extends StatelessWidget {
           const SizedBox(height: 16),
           const Text('Steps', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
           const SizedBox(height: 8),
+          if (exercise.steps.isEmpty)
+            const Text('No steps provided.'),
           ...List.generate(exercise.steps.length, (i) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 10),

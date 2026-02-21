@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../data/exercises.dart';
+import '../services/exercise_service.dart';
+import '../models/exercise.dart';
 import 'exercise_detail_screen.dart';
 
 class ExerciseSearchScreen extends StatefulWidget {
@@ -15,10 +16,7 @@ class _ExerciseSearchScreenState extends State<ExerciseSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final results = sampleExercises.where((e) {
-      final s = '${e.name} ${e.target} ${e.difficulty}'.toLowerCase();
-      return s.contains(q.toLowerCase());
-    }).toList();
+    final service = ExerciseService();
 
     return Scaffold(
       appBar: AppBar(title: const Text('Search Exercises')),
@@ -35,25 +33,45 @@ class _ExerciseSearchScreenState extends State<ExerciseSearchScreen> {
             ),
           ),
           Expanded(
-            child: results.isEmpty
-                ? const Center(child: Text('No results'))
-                : ListView.separated(
-                    padding: const EdgeInsets.all(12),
-                    itemCount: results.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 8),
-                    itemBuilder: (context, i) {
-                      final ex = results[i];
-                      return ListTile(
-                        title: Text(ex.name),
-                        subtitle: Text('${ex.target} • ${ex.difficulty}'),
-                        trailing: const Icon(Icons.chevron_right),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => ExerciseDetailScreen(exercise: ex)),
+            child: StreamBuilder<List<Exercise>>(
+              stream: service.watchExercises(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
+                if (!snapshot.hasData) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                final all = snapshot.data!;
+                final results = all.where((e) {
+                  final s = '${e.name} ${e.target} ${e.difficulty}'.toLowerCase();
+                  return s.contains(q.toLowerCase());
+                }).toList();
+
+                return results.isEmpty
+                    ? const Center(child: Text('No results'))
+                    : ListView.separated(
+                  padding: const EdgeInsets.all(12),
+                  itemCount: results.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 8),
+                  itemBuilder: (context, i) {
+                    final ex = results[i];
+                    return ListTile(
+                      title: Text(ex.name),
+                      subtitle: Text('${ex.target} • ${ex.difficulty}'),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ExerciseDetailScreen(exercise: ex),
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ],
       ),
